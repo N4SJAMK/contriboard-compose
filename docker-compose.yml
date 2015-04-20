@@ -1,0 +1,53 @@
+---
+mongo:
+    image: mongo
+
+redis:
+    image: redis
+
+api:
+    build: api
+    links:
+        - mongo
+        - redis
+    environment:
+        - "NODE_ENV=production"
+        - "PORT=9002"
+        - "MONGODB_URL=mongodb://mongo:27017/production"
+        - "REDIS_HOST=redis"
+        - "REDIS_PORT=6379"
+        - "NEW_RELIC_ENABLED=false"
+    ports:
+        - "9002:9002"
+    expose:
+        - "9002"
+    volumes:
+        - "logs/:/home/teamboard/logs"
+    command: "/usr/local/bin/node /home/teamboard/teamboard-api/index.js"
+
+io:
+    build: io
+    links:
+        - redis
+        - api
+    environment:
+        - "NODE_ENV=production"
+        - "PORT=9001"
+        - "REDIS_HOST=redis"
+        - "REDIS_PORT=6379"
+        - "NEW_RELIC_ENABLED=false"
+        - "API_URL=http://api:9002/api"
+    ports:
+        - "9001:9001"
+    expose:
+        - "9001"
+    volumes:
+        - "logs/:/home/teamboard/logs"
+    command: "/usr/local/bin/node /home/teamboard/teamboard-io/index.js"
+
+client:
+    build: client-react
+    environment:
+        - "NODE_ENV=production"
+        - "API_URL=http://localhost:9002/api"
+        - "IO_URL=http://localhost:9001"

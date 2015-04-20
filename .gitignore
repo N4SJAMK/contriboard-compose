@@ -1,0 +1,9 @@
+*.swp
+*.swo
+
+*.pyc
+
+api
+io
+client-react
+logs
