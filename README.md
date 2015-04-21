@@ -34,8 +34,23 @@ cd contriboard-compose
 ```
 
 Run docker-compose. At the first time it takes a while to run the command
-because docker pulls all necessary images and builds contriboard images.
+because docker pulls all the necessary images and builds the contriboard images.
 ```
 # the -d parameter is not necessary but it puts the containers to the background
 sudo docker-compose -d
+```
+
+important commands:
+```
+# show help
+docker-compose --help
+
+# show containers
+sudo docker-compose ps
+
+# create and start containers
+sudo docker-compose up -d
+
+# show logs from containers
+sudo docker-compose logs
 ```
