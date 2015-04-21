@@ -19,8 +19,8 @@ api:
         - "REDIS_PORT=6379"
         - "NEW_RELIC_ENABLED=false"
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-api.log"
-    ports:
-        - "9002:9002"
+    expose:
+        - "9002"
     command: "/usr/local/bin/node /home/teamboard/teamboard-api/index.js"
     restart: "on-failure:10"
 
@@ -37,8 +37,8 @@ io:
         - "API_URL=http://api:9002/api"
         - "NEW_RELIC_ENABLED=false"
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-io.log"
-    ports:
-        - "9001:9001"
+    expose:
+        - "9001"
     command: "/usr/local/bin/node /home/teamboard/teamboard-io/index.js"
     restart: "on-failure:10"
 
@@ -46,8 +46,17 @@ client:
     build: client-react
     environment:
         - "NODE_ENV=production"
-        - "API_URL=http://localhost:9002/api"
-        - "IO_URL=http://localhost:9001"
+        - "API_URL=http://localhost/api"
+        - "IO_URL=http://localhost"
+    restart: "on-failure:10"
+
+haproxy:
+    image: haproxy
+    links:
+        - api
+        - io
+        - client
+    volumes:
+        - "haproxy-conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
     ports:
         - "80:80"
-    restart: "on-failure:10"
