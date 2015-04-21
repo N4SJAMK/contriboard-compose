@@ -22,6 +22,7 @@ api:
     ports:
         - "9002:9002"
     command: "/usr/local/bin/node /home/teamboard/teamboard-api/index.js"
+    restart: "on-failure:10"
 
 io:
     build: io
@@ -39,6 +40,7 @@ io:
     ports:
         - "9001:9001"
     command: "/usr/local/bin/node /home/teamboard/teamboard-io/index.js"
+    restart: "on-failure:10"
 
 client:
     build: client-react
@@ -48,3 +50,4 @@ client:
         - "IO_URL=http://localhost:9001"
     ports:
         - "80:80"
+    restart: "on-failure:10"
