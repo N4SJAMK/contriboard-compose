@@ -21,8 +21,6 @@ api:
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-api.log"
     ports:
         - "9002:9002"
-    volumes:
-        - "logs/:/home/teamboard/logs"
     command: "/usr/local/bin/node /home/teamboard/teamboard-api/index.js"
 
 io:
@@ -40,8 +38,6 @@ io:
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-io.log"
     ports:
         - "9001:9001"
-    volumes:
-        - "logs/:/home/teamboard/logs"
     command: "/usr/local/bin/node /home/teamboard/teamboard-io/index.js"
 
 client:
