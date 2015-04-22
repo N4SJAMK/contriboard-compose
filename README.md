@@ -47,6 +47,12 @@ the following command
 sudo pip install requests==2.5.2
 ```
 
+Because all the containers are started at the same time the mongo service might
+not be up at the time when api is trying to connect to it. This results in that
+api container crashes and does not stay up. If this happens you have to run
+`sudo docker-compose start` when mongo container is running. This is something
+that should be fixed in the future.
+
 important commands:
 ```
 # show help
