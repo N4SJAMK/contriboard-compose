@@ -21,7 +21,7 @@ api:
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-api.log"
     expose:
         - "9002"
-    command: "/usr/local/bin/node /home/teamboard/teamboard-api/index.js"
+    command: "/usr/bin/node /home/teamboard/teamboard-api/index.js'"
     restart: "on-failure:10"
 
 io:
@@ -39,7 +39,7 @@ io:
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-io.log"
     expose:
         - "9001"
-    command: "/usr/local/bin/node /home/teamboard/teamboard-io/index.js"
+    command: "/usr/bin/node /home/teamboard/teamboard-io/index.js"
     restart: "on-failure:10"
 
 client:
