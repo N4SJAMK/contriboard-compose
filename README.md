@@ -13,7 +13,8 @@ sudo apt-get install -y lxc-docker
 
 Install pip if not already installed
 ```
-sudo apt-get install -y python-pip
+sudo easy_install -U pip
+# Install python-setuptools if you do not have easy_install installed
 ```
 
 Install docker-compose
