@@ -32,6 +32,7 @@ Clone the contriboard-compose repository
 ```
 git clone https://github.com/N4SJAMK/contriboard-compose.git
 cd contriboard-compose
+./initialize
 ```
 
 Run docker-compose. At the first time it takes a while to run the command
