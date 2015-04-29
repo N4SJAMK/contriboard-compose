@@ -21,7 +21,7 @@ api:
         - "NEW_RELIC_LOG=/home/teamboard/logs/relic-api.log"
     expose:
         - "9002"
-    command: "/usr/bin/node /home/teamboard/teamboard-api/index.js'"
+    command: "/usr/bin/node /home/teamboard/teamboard-api/index.js"
     restart: "on-failure:10"
 
 io:
