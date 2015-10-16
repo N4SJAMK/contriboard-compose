@@ -45,7 +45,7 @@ make clone
 Run docker-compose. At the first time it takes a while to run the command
 because docker pulls all the necessary images and builds the contriboard images.
 ```
-# the -d parameter is not necessary but it puts the containers to the background
+# the -d parameter is not necessary but it puts the containers to background
 sudo docker-compose up -d
 ```
 
