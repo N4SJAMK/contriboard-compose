@@ -10,15 +10,15 @@ api:
     links:
         - mongo
         - redis
+        - img
     environment:
-        - "NODE_ENV=production"
-        - "PORT=9002"
-        - "TOKEN_SECRET=taneli_on_kova_koodaamaan"
-        - "MONGODB_URL=mongodb://mongo:27017/production"
-        - "REDIS_HOST=redis"
-        - "REDIS_PORT=6379"
-        - "NEW_RELIC_ENABLED=false"
-        - "NEW_RELIC_LOG=/home/teamboard/logs/relic-api.log"
+        - NODE_ENV=production
+        - PORT=9002
+        - TOKEN_SECRET=hard_codaus_on_parasta
+        - MONGODB_URL=mongodb://mongo:27017/production
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - IMG_URL=http://img:9003/img
     expose:
         - "9002"
     command: "/usr/bin/node /home/teamboard/teamboard-api/index.js"
@@ -30,13 +30,11 @@ io:
         - redis
         - api
     environment:
-        - "NODE_ENV=production"
-        - "PORT=9001"
-        - "REDIS_HOST=redis"
-        - "REDIS_PORT=6379"
-        - "API_URL=http://api:9002/api"
-        - "NEW_RELIC_ENABLED=false"
-        - "NEW_RELIC_LOG=/home/teamboard/logs/relic-io.log"
+        - NODE_ENV=production
+        - PORT=9001
+        - REDIS_HOST=redis
+        - REDIS_PORT=6379
+        - API_URL=http://api:9002/api
     expose:
         - "9001"
     command: "/usr/bin/node /home/teamboard/teamboard-io/index.js"
@@ -45,10 +43,19 @@ io:
 client:
     build: client-react
     environment:
-        - "NODE_ENV=production"
-        - "API_URL=http://localhost/api"
-        - "IO_URL=http://localhost"
+        - NODE_ENV=production
+        - API_URL=http://127.0.0.1/api
+        - IO_URL=http://127.0.0.1
     restart: "on-failure:10"
+
+img:
+    build: img
+    links:
+        - mongo
+    environment:
+        - NODE_ENV=production
+        - PORT=9003
+        - MONGO_URL=mongodb://mongo:27017/production
 
 haproxy:
     image: haproxy
@@ -56,7 +63,8 @@ haproxy:
         - api
         - io
         - client
+        - img
     volumes:
-        - "haproxy-conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
+        - "./haproxy-conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro"
     ports:
         - "80:80"
