@@ -12,6 +12,11 @@ sudo apt-get update
 sudo apt-get install -y lxc-docker
 ```
 
+Install make if not already installed
+```
+sudo apt-get install make
+```
+
 Install pip if not already installed
 ```
 sudo easy_install -U pip
@@ -34,7 +39,7 @@ Clone the contriboard-compose repository
 ```
 git clone https://github.com/N4SJAMK/contriboard-compose.git
 cd contriboard-compose
-./initialize
+make clone
 ```
 
 Run docker-compose. At the first time it takes a while to run the command
@@ -69,4 +74,26 @@ sudo docker-compose up -d
 
 # show logs from containers
 sudo docker-compose logs
+```
+
+The make command allows you to specify the user whose repository is cloned. This
+is useful if you want to clone your own fork. Note that you have to have forked
+the repository before the command works.
+```
+make clone USER=your_github_account
+```
+
+You can clone over ssh if you want. By default the command clones the repository
+over https.
+```
+make clone SSH=true
+```
+
+Other commands:
+```
+# run git pull in each of the repositories
+make pull
+
+# remove all the cloned repositories
+make clean
 ```
