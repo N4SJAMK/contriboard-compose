@@ -6,7 +6,7 @@ redis:
     image: redis
 
 api:
-    build: api
+    image: n4sjamk/teamboard-api
     links:
         - mongo
         - redis
@@ -25,7 +25,7 @@ api:
     restart: "on-failure:10"
 
 io:
-    build: io
+    image: n4sjamk/teamboard-io
     links:
         - redis
         - api
@@ -41,7 +41,7 @@ io:
     restart: "on-failure:10"
 
 client:
-    build: client-react
+    image: n4sjamk/teamboard-client
     environment:
         - NODE_ENV=production
         - API_URL=http://127.0.0.1/api
@@ -49,7 +49,7 @@ client:
     restart: "on-failure:10"
 
 img:
-    build: img
+    image: n4sjamk/teamboard-img
     links:
         - mongo
     environment:
